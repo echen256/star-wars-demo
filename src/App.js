@@ -15,7 +15,7 @@ function App() {
   const [state, setState] = useState({
     loading: true,
     planets: [],
-    allPlanets : [],
+    allPlanets: [],
     paginationDetails: {
       page: 1,
       total: 0,
@@ -40,9 +40,9 @@ function App() {
 
   useEffect(() => {
     state.planets = getCurrentPlanets(state.paginationDetails.page)
-    setState({...state})
+    setState({ ...state })
   }, [state.paginationDetails.page])
- 
+
   const getCurrentPlanets = (page) => {
     page = page - 1;
 
@@ -57,7 +57,7 @@ function App() {
       let total = 0;
       let page = 1;
       while (hasMore) {
-        let res = await axios.get(' https://swapi.dev/api/planets/', { params: { page , ordering : "name"} })
+        let res = await axios.get(' https://swapi.dev/api/planets/', { params: { page, ordering: "name" } })
         let data = res.data;
         allPlanets = allPlanets.concat(data.results)
         total = data.count;
@@ -66,19 +66,19 @@ function App() {
           hasMore = false;
         }
       }
-     
+
       let paginationDetails = {
         ...state.paginationDetails,
         total
       }
 
-      allPlanets = allPlanets.sort((a,b) => {
+      allPlanets = allPlanets.sort((a, b) => {
         return a.name.localeCompare(b.name)
-      }) 
+      })
       state.allPlanets = allPlanets
       setState({
         ...state,
-        paginationDetails, loading: false, allPlanets , planets : getCurrentPlanets(state.paginationDetails.page)
+        paginationDetails, loading: false, allPlanets, planets: getCurrentPlanets(state.paginationDetails.page)
       })
     } catch (error) {
       setState({
@@ -90,15 +90,15 @@ function App() {
   }
 
   const setPagination = (page) => {
-  
+
     state.paginationDetails.page = page;
     setState({ ...state })
   }
 
   return (
-    <div className="background"> 
-     
-       <div style={{ display: "flex", zIndex : 1 }}>
+    <div className="background">
+
+      <div style={{ display: "flex", zIndex: 1 }}>
         <div style={{ flexGrow: 6 }} className="vertical-container" >
           <PopulationChart state={state} setState={setState} setPagination={setPagination} />
           <br />
@@ -107,7 +107,7 @@ function App() {
         <div style={{ flexGrow: 1 }} className="vertical-container">
           <OptionsBar state={state} setState={setState} />
         </div>
-      </div>  
+      </div>
 
     </div>
   );
@@ -119,44 +119,55 @@ const OptionsBar = (props) => {
 
   const { categoryOptions, plotOptions } = state
   const handleCheckbox = (parentObjName, name) => {
-    state[parentObjName][name] = ! state[parentObjName][name]
-    setState({ ...state,  [parentObjName ] :  state[parentObjName] })
+    state[parentObjName][name] = !state[parentObjName][name]
+    setState({ ...state, [parentObjName]: state[parentObjName] })
   }
 
   return <Container>
-    <div style={{ margin: 'auto', marginTop: "20px", width: 'fit-content' }}>
-      <picture>
-        <img srcSet={JediSymbol} style={{ width: "200px", margin: 'auto' }} />
-      </picture>
-    </div>
-    <hr />
-    <div style={{ margin: "10px" }}>
-      Data Field Options
-      <div style={{ margin: "10px" }}>
-      
-        <Checkbox className = "checkbox-label" checked={categoryOptions.population} label="Population" onChange={() => { handleCheckbox("categoryOptions", "population") }} />
-        <Checkbox className = "checkbox-label" checked={categoryOptions.rotation_period}  label="Rotational Period" onChange={() => { handleCheckbox("categoryOptions", "rotation_period") }} />
-        <Checkbox className = "checkbox-label" checked={categoryOptions.orbital_period}   label="Orbital Period" onChange={() => { handleCheckbox("categoryOptions", "orbital_period") }} />
-        <Checkbox className = "checkbox-label" checked={categoryOptions.diameter}   label="Diameter" onChange={() => { handleCheckbox("categoryOptions", "diameter") }} />
-        <Checkbox className = "checkbox-label" checked={categoryOptions.surface_water}   label="Surface Water" onChange={() => { handleCheckbox("categoryOptions", "surface_water") }} />
+    <div style={{ minWidth: '300px', width: "min-content" }}>
+      <div style={{ margin: 'auto', marginTop: "20px", width: 'fit-content' }}>
+        <picture>
+          <img srcSet={JediSymbol} style={{ width: "200px", margin: 'auto' }} />
+        </picture>
       </div>
-
       <hr />
-      Plot Options
       <div style={{ margin: "10px" }}>
-      
-        <Checkbox className = "checkbox-label" checked={plotOptions.logarithmic}  label="Logarithmic Display" onChange={() => { handleCheckbox("plotOptions", "logarithmic") }} />
+        Data Field Options
+        <div style={{ margin: "10px" }}>
+
+          <Checkbox className="checkbox-label" checked={categoryOptions.population} label="Population" onChange={() => { handleCheckbox("categoryOptions", "population") }} />
+          <Checkbox className="checkbox-label" checked={categoryOptions.rotation_period} label="Rotational Period" onChange={() => { handleCheckbox("categoryOptions", "rotation_period") }} />
+          <Checkbox className="checkbox-label" checked={categoryOptions.orbital_period} label="Orbital Period" onChange={() => { handleCheckbox("categoryOptions", "orbital_period") }} />
+          <Checkbox className="checkbox-label" checked={categoryOptions.diameter} label="Diameter" onChange={() => { handleCheckbox("categoryOptions", "diameter") }} />
+          <Checkbox className="checkbox-label" checked={categoryOptions.surface_water} label="Surface Water" onChange={() => { handleCheckbox("categoryOptions", "surface_water") }} />
+        </div>
+
+        <hr />
+        Plot Options
+        <div style={{ margin: "10px" }}>
+
+          <Checkbox className="checkbox-label" checked={plotOptions.logarithmic} label="Logarithmic Display" onChange={() => { handleCheckbox("plotOptions", "logarithmic") }} />
+
+        </div>
+
+        <hr />
+        <br />
+        <div style={{ display: "flex", flexDirection: "column-reverse", width: "fit-content", fontSize: "10pt" }}>
+          <div className="arubesh">
+            <p>
+              There is no emotion, there is peace.
+            </p>
+            <br/>
+            <p>
+              There is no ignorance, there is knowledge.
+            </p>
+            <br/>
+            <p>
+              There is no passion, there is serenity.</p>
+          </div>
+        </div>
 
       </div>
-
-      <hr/>
-  <br/>
-<div style = {{display : "flex", flexDirection : "column-reverse", width : "fit-content", fontSize : "10pt"}}>
-<div className = "arubesh">
-      There is no emotion, there is peace. There is no ignorance, there is knowledge. There is no passion, there is serenity.
-        </div>
-  </div>
-     
     </div>
   </Container>
 }
@@ -165,38 +176,38 @@ const formatFieldName = (fieldName) => {
   let strings = fieldName.split("_")
   let output = ""
   strings.forEach((s) => {
-    output+= s[0].toUpperCase() + s.slice(1) + " "
+    output += s[0].toUpperCase() + s.slice(1) + " "
   })
   return output
 }
 
 const SeriesConfig = {
-  population : {
-    color : "red",
+  population: {
+    color: "red",
     tooltip: {
       valueSuffix: ' Million'
     },
   },
   rotation_period: {
-    color : "orange",
+    color: "orange",
     tooltip: {
       valueSuffix: ' Standard Hours'
     },
   },
-  orbital_period : {
-    color : "white",
+  orbital_period: {
+    color: "white",
     tooltip: {
       valueSuffix: ' Standard Hours'
     },
   },
-  diameter : {
-    color : "#45062E",
+  diameter: {
+    color: "#45062E",
     tooltip: {
       valueSuffix: ' Kilometers'
     },
   },
   surface_water: {
-    color : "lightGray",
+    color: "lightGray",
     tooltip: {
       valueSuffix: '%'
     },
@@ -210,7 +221,7 @@ const PopulationChart = (props) => {
 
   let categories = state.planets.map((planet) => { return planet.name })
 
-  let series = [] 
+  let series = []
   Object.keys(categoryOptions).forEach((option) => {
     if (categoryOptions[option]) {
       let data = state.planets.map((planet) => {
@@ -225,16 +236,16 @@ const PopulationChart = (props) => {
 
   let options = {
     chart: {
-      type: 'bar', backgroundColor: "transparent" 
-    }, 
-    legend : {
-      itemStyle : {
-        color : "white"
+      type: 'bar', backgroundColor: "transparent"
+    },
+    legend: {
+      itemStyle: {
+        color: "white"
       }
     },
     title: {
       text: ""
-    }, 
+    },
     xAxis: {
       categories: categories,
       title: {
@@ -243,8 +254,8 @@ const PopulationChart = (props) => {
     },
     yAxis: {
       min: plotOptions.logarithmic && .0001,
-      type: plotOptions.logarithmic ?  'logarithmic' : "linear"
-    }, 
+      type: plotOptions.logarithmic ? 'logarithmic' : "linear"
+    },
     plotOptions: {
       bar: {
         dataLabels: {
