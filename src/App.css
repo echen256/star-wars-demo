@@ -1,5 +1,18 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+
 .App {
   text-align: center;
+}
+
+body {
+  margin: 0 !important; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: black; 
+  color : white;
 }
 
 .App-logo {
@@ -36,3 +49,76 @@
     transform: rotate(360deg);
   }
 }
+ 
+.vertical-container { 
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-label  {
+  font-size : 14pt;
+}
+
+.container {
+  border-color: white;
+  border-style: solid;
+  color: red;
+  font-size: 20pt;
+  flex-grow: 1;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.td {
+  color : white !important;
+  
+}
+
+.th {
+  color : red  !important;
+  font-size: 12pt;
+}
+
+.capitalize::first-letter {
+  text-transform:capitalize;
+}
+
+.bp4-control input:checked ~ .bp4-control-indicator {
+  background-color: red !important;
+}
+
+
+.bp4-control input:checked   {
+  background-color: red !important;
+}
+
+.bp4-control input:focus ~ .bp4-control-indicator { 
+  outline-offset: 2px;
+  -moz-outline-radius: 6px;
+  outline: red;
+}
+
+.background-image { 
+  opacity: .25;
+  width: 50vw;
+  margin: auto;
+  z-index: 0;
+  position: absolute;
+  fill: transparent;
+  margin-left: 20%;
+  margin-top: 10%;
+}
+
+.arubesh {
+  font-family: 'Aurebesh';
+}
+
+@font-face {
+  font-family: Aurebesh;
+  font-style: normal;
+  font-weight: 400;
+  src:   
+    url("./fonts/Aurebesh.otf") format('opentype');
+}
+ 
